@@ -1,0 +1,48 @@
+syntax = "proto3";
+package messages;
+option go_package="at23/messages";
+import "actor.proto";
+
+message Ping{
+    string adresa = 1;
+    int32 port =2;
+    string ime = 3;
+    int32 port2 = 4;
+}
+
+message Pong{
+    repeated string adrese = 1;
+}
+
+message NoviArtikli{
+    repeated Proizvod artikli =1;
+}
+
+message Proizvod{
+    string identifikator =1;
+    int32 kolcicina = 2;
+    string cena =3;
+}
+
+service Pingpong {
+    rpc PingStorage(Ping) returns (Pong) {}
+}
+
+message ArtikalPorucen{ //consumer-coordinator porucuje iz skladista
+    string TransactionId = 1;  
+    string identifikator= 2;
+    string nazivskladista = 3;
+    int32 kolicina = 4;
+}
+
+message DostavaOdSuppliera{
+    string supplier_id = 1;
+    string naziv_skladista = 2;
+    repeated Proizvod stavke = 3;
+}
+
+message PorudzbinaZaSuppliera{
+    string naziv_skladista =1;
+    repeated Proizvod stavke =2;
+    //datum?
+}

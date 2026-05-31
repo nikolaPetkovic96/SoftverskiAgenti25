@@ -1,0 +1,36 @@
+syntax = "proto3";
+package messages;
+option go_package="at23/messages";
+
+import "actor.proto";
+
+message Simulate{
+}
+
+message StartSimulation{
+  repeated Item Items = 1; 
+}
+
+
+message Item{
+    string ItemId = 1;
+    int32 Amount = 2;
+    int32 Price = 3;
+}
+
+message BuyProduct{
+    string TransactionId = 1; 
+    repeated Item Items = 2;
+    actor.PID Sender = 3;
+}
+
+message CompletedTransaction{
+   string TransactionId = 1; 
+}
+
+message BuyProduct2{
+  string TransactionId = 1; 
+  repeated Item Items = 2;
+  actor.PID Sender = 3;
+  string skladiste = 4;
+}

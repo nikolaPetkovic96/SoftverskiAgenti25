@@ -1,0 +1,125 @@
+syntax = "proto3";
+package messages;
+//import "google/protobuf/timestamp.proto";
+import "google/protobuf/timestamp.proto";
+option go_package="./";
+
+message Produkt{
+    string id = 1;
+    string naziv = 2;
+    //enum kategorija,
+    //enum jedinica mere
+}
+
+//Consumer 
+message Stavka{
+    string produkt_id =1;
+    int32 kolicina =2;
+}
+
+message BuyProduct{
+    google.protobuf.Timestamp datum = 1;
+    string korisnik = 2;  //??
+    repeated Stavka stavke = 3;
+    //id;
+}
+
+message SuccessfulTransaction{
+    //enum rezultat
+    //BuyProduct id;
+}
+
+//DistributorActor - RECEIVE
+//Receive BuyProduct
+ message MissingProduct {
+    string storage_id =1;
+    repeated Stavka stavke = 2;
+ }
+//ProductAvailable 
+message ProductToDistributor {
+    string supplier_id = 1;
+    repeated Stavka stavke = 2;
+    //buyProduct id;
+}
+message ProductCreated{
+    string supplier_id = 1;
+    repeated Stavka stavke= 2;
+}
+
+//DistributorActor - Sends
+message CheckProduct {
+    repeated Stavka stavke = 1;
+}
+message GetProduct {
+    repeated Stavka stavke = 1;
+}
+//SuccessfulTransaction - kod consumera
+
+message ProductToRetailer {
+    repeated Stavka stavke= 2;
+}
+
+message NewProduct { //salje se supplieru
+    repeated Stavka stavke= 1;
+}
+
+//StateManagmentActor -RECEIVES
+message RefreshState_REQ{ 
+    
+}
+
+message InventoryResponse {
+    string storage_id = 1;
+    repeated Stavka stavke= 2;
+}
+
+//StateManagmentActor -SENDS
+message RefreshState {}
+message GetInventory {}
+
+//RetailerActor --RECEIVES
+// message GetInventory {
+
+// }
+// message CheckProduct {
+//     repeated Stavka stavke = 1;
+// } 
+// message GetProduct  {
+//     repeated Stavka stavke = 1;
+// } 
+message CheckInventoryStatus{}
+
+// message ProductToRetailer{
+//     repeated Stavka stavke = 1;
+// }
+
+//RetailerActor --SENDS
+// message InventoryResponse{
+//     repeated Stavka stavke = 1;
+// }
+//message CheckInventoryStatus {}
+
+// message MissingProduct {
+//     repeated Stavka stavke = 1; //id produkta i kolicina koju porucujemo
+// }
+message ProductAvailable {
+    repeated Stavka stavke = 1; //id produkta i trenutna kolciina
+}
+
+// message ProductToDistributor {
+//     repeated Stavka stavke = 1;
+//     //id porudzbine
+// }
+
+//SuplierActor RECEIVES -- Moze se iskoritistiti http endpoint na supplieru, za dodavanje novog produkta
+message NewProdcut{
+    Produkt noviProdukt = 1;
+}
+//SuplierActor Sends
+// message ProductCreated { // obavestiti distributora i sve retailere da supplier ima novi proizvod
+//     Produkt noviProdukt = 1;
+
+// }
+
+
+

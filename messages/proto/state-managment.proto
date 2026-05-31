@@ -1,0 +1,20 @@
+syntax = "proto3";
+package messages;
+option go_package="at23/messages";
+
+import "consumer.proto";
+import "actor.proto";
+
+message ClockPing{
+}
+
+message GetAllProductsState{
+    actor.PID Sender = 1;
+}
+
+message ReturnAllProductsState{
+    repeated messages.Item Items = 1;
+    actor.PID Sender = 2;
+}
+
+
